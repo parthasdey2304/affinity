@@ -1,63 +1,147 @@
-# Affinity
+<div align="center">
 
-> A modern replacement for `cat` and `bat` that displays source code in the terminal with VS Code-like scope guides, beautiful syntax highlighting, Unicode boxes, file information, and intelligent parsing.
-
-Affinity is designed to be the ultimate developer tool for reading code in the terminal, bringing the best parts of modern IDEs directly to your command line.
-
-## Installation
-
-```bash
-pip install .
+```text
+    ___    _________________   ______________  __
+   /   |  / ____/ ____/  _/ | / /  _/_  __/\ \/ /
+  / /| | / /_  / /_   / //  |/ // /  / /    \  / 
+ / ___ |/ __/ / __/ _/ // /|  // /  / /     / /  
+/_/  |_/_/   /_/   /___/_/ |_/___/ /_/     /_/   
 ```
 
-After installation, the `affinity` command will be available globally.
+**The ultimate, highly-aesthetic replacement for `cat` and `bat`.**
 
-## Features
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+</div>
+
+---
+
+## 🚀 Overview
+
+**Affinity** is a next-generation terminal tool designed for developers who want the rich viewing experience of modern IDEs (like VS Code) directly in their command line. 
+
+Say goodbye to plain text dumps. Affinity parses your code, wraps it in beautiful Unicode borders, syntax-highlights every token flawlessly, and visually connects logical code blocks using intelligent vertical scope guides.
+
+---
+
+## ✨ Spectacular Features
 
 | Feature | Description |
 | :--- | :--- |
-| **Beautiful Unicode Borders** | Resizes automatically according to your terminal width, drawing beautiful VS Code-esque frames around your code. |
-| **Line Numbers** | Configurable line numbers, easily disabled with `--no-line-numbers`. |
-| **Syntax Highlighting** | Powered by Pygments. Automatically detects languages via extension, shebang, or lexer guessing. Supports almost every programming language. |
-| **VS Code Scope Guides** | (Core Feature) Intelligent vertical indentation and bracket guides that track scopes correctly for Python, C-style, and nested structures. |
-| **Brace Matching** | Highlights matching and nested `()`, `[]`, and `{}` braces. |
-| **Intelligent Parser** | Tracks functions, classes, loops, and conditionals using Tree-sitter or an advanced custom parser. |
-| **Theme Engine** | Includes Monokai, Dracula, One Dark, Nord, Solarized, GitHub Dark, Catppuccin, and more (`--theme dracula`). |
-| **Terminal Width Detection** | Wraps lines perfectly without ever cutting Unicode or breaking ANSI colors. |
-| **File Information Header** | Displays the file path, language, encoding, size, and line count cleanly at the top of every file. |
-| **Minimap** | A small VS Code-like minimap on the side for quickly navigating large files (`--minimap`). |
-| **Folding Indicators** | Displays `▼` and `▶` beside collapsible code regions. |
-| **Search Highlight** | Easily find occurrences within files (`--search term`). |
-| **Highlight Current Line** | Jump right to the context you need (`--line 25`). |
-| **Diff Mode** | View beautiful side-by-side file comparisons (`affinity old.py new.py`). |
-| **Directory Viewer** | View beautiful tree structures of directories, similar to `eza` (`affinity src/`). |
-| **Binary Detection** | Gracefully handles binary files instead of dumping garbage to your terminal. |
-| **Nerd Font Icons** | Displays beautiful file icons (🐍, ☕, 🦀, etc.) natively in the header. |
-| **High Performance** | Blazing fast rendering even for files with 100,000+ lines. |
-| **Configuration File** | Customize your defaults permanently via `~/.config/affinity/config.toml`. |
+| 🎨 **VS Code Scope Guides** | Intelligent vertical indentation guides that dynamically track scopes. |
+| 🌈 **Syntax Highlighting** | Real-time, hierarchical token parsing powered by Pygments. |
+| 📦 **Unicode UI Frames** | Beautiful frames that seamlessly resize to your terminal width without breaking. |
+| 🌲 **Directory Viewer** | Automatically renders beautiful file trees when passed a directory instead of a file. |
+| 🎭 **Theme Engine** | First-class support for Monokai, Dracula, One Dark, Nord, Solarized, and more. |
+| 🔍 **Search Highlighting** | Find occurrences instantly within files via the `--search` flag. |
+| 🎯 **Focus Mode** | Jump straight to the context you need with `--line <num>` highlighting. |
+| ⚡ **Auto-Wrapping** | Long lines gracefully wrap to the next line keeping your UI boxed flawlessly. |
 
-## CLI Usage
+---
+
+## 💻 Installation
+
+We provide an extremely straightforward installation suite. No system-level package conflicts, no dependency hell.
+
+### Automated Setup (Recommended)
+
+Simply clone this repository and run the startup script. It bypasses environment headaches and securely installs the package exclusively for your local user.
 
 ```bash
-# Basic usage
-affinity file.py
+# Securely install and configure Affinity
+./start.sh
+```
 
-# View an entire directory tree
-affinity folder/
+> **Note**: The script will automatically add `~/.local/bin` to your `PATH` if it isn't already there!
 
-# Use a specific theme
-affinity file.py --theme dracula
+### Uninstallation
 
-# Disable borders and formatting for plain output
-affinity file.py --plain
+To cleanly wipe Affinity and all its artifacts from your system:
 
-# View a file with search highlighting
-affinity file.py --search hello
+```bash
+# Remove Affinity and clean up build artifacts
+./remove.sh
+```
 
-# Highlight a specific line
-affinity file.py --line 25
+---
 
-# Show all options
+## 🛠️ CLI Usage
+
+Affinity was designed with an intuitive, human-first command-line interface.
+
+```bash
+# 📖 Basic File Viewing
+affinity main.py
+
+# 🌲 View an entire directory tree
+affinity src/
+
+# 🧛 Use a specific color theme
+affinity main.py --theme dracula
+
+# 🔍 Highlight search terms in the file
+affinity config.yaml --search "database"
+
+# 🎯 Highlight a specific line
+affinity server.rs --line 145
+
+# 🚫 Disable all formatting (acts like standard 'cat')
+affinity data.txt --plain
+
+# ℹ️ View all available CLI options
 affinity --help
 ```
 
+---
+
+## ⚙️ Configuration
+
+Tired of passing the `--theme` flag every time? Affinity supports permanent user configuration. 
+
+Simply create a file at `~/.config/affinity/config.toml`:
+
+```toml
+# Default configuration
+theme = "dracula"
+line_numbers = true
+wrap = true
+scope_guides = true
+```
+
+---
+
+## 🧬 Architecture
+
+Affinity achieves its stunning visuals by bridging **Pygments** (for robust token lexing) and **Rich** (for terminal ANSI rendering). 
+
+Unlike standard `bat`, Affinity intercepts the token stream and injects calculated `│` characters at precise indentation boundaries by reading mathematical spaces, ensuring that syntax colors (spans) are perfectly preserved even when slicing text arrays on the fly. 
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from developers across the globe! 
+
+1. **Fork** the repository
+2. **Create** your feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
+
+---
+
+## ❓ FAQ
+
+**Q: Does Affinity support binary files?**  
+A: Yes! Affinity detects binary signatures automatically and gracefully prevents terminal garbage output.
+
+**Q: Why not just use `bat`?**  
+A: `bat` is incredible, but Affinity goes a step further by natively rendering VS Code-like vertical indentation guides. This makes reading heavily nested Python or YAML files infinitely easier in the terminal.
+
+---
+
+<div align="center">
+<i>Built with ❤️ for developers everywhere.</i>
+</div>
