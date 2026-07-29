@@ -10,6 +10,51 @@ import logging
 console = Console()
 log = logging.getLogger(__name__)
 
+
+
+def build_layout(
+    file_path: Path,
+    styled_lines: list,
+    info: dict,
+    no_border: bool,
+    wrap: bool,
+    line_numbers: bool
+):
+    """Builds the rich layout for rendering."""
+    if no_border:
+        from rich.text import Text
+        result = Text()
+        for idx, line in enumerate(styled_lines, 1):
+            if line_numbers:
+                result.append(f"{idx:4} │ ", style="dim")
+            result.append(line)
+            result.append("\n")
+        return result
+
+    header_text = f"Language: {info['language']} | Lines: {info['lines']} | Size: {info['size_str']} | Encoding: {info['encoding']}"
+    
+    table = Table(show_header=False, box=None, padding=(0, 1), collapse_padding=True)
+    if line_numbers:
+        table.add_column("Line", style="dim", justify="right", width=4)
+        table.add_column("Code", no_wrap=not wrap)
+    else:
+        table.add_column("Code", no_wrap=not wrap)
+
+    for idx, line in enumerate(styled_lines, 1):
+        if line_numbers:
+            table.add_row(str(idx), line)
+        else:
+            table.add_row(line)
+
+    title_name = file_path.name if file_path else "stdin"
+    return Panel(
+        table,
+        title=f"File: {title_name} ({header_text})",
+        title_align="left",
+        border_style="blue",
+        expand=False
+    )
+
 def render_file(
     file_path: Path,
     theme: str,
@@ -52,36 +97,8 @@ def render_file(
         highlight_line=highlight_line
     )
 
-    if no_border:
-        for idx, line in enumerate(styled_lines, 1):
-            if line_numbers:
-                console.print(f"[dim]{idx:4} │ [/dim]", end="")
-            console.print(line)
-        return
-
-    header_text = f"Language: {info['language']} | Lines: {info['lines']} | Size: {info['size_str']} | Encoding: {info['encoding']}"
-    
-    table = Table(show_header=False, box=None, padding=(0, 1), collapse_padding=True)
-    if line_numbers:
-        table.add_column("Line", style="dim", justify="right", width=4)
-        table.add_column("Code", no_wrap=not wrap)
-    else:
-        table.add_column("Code", no_wrap=not wrap)
-
-    for idx, line in enumerate(styled_lines, 1):
-        if line_numbers:
-            table.add_row(str(idx), line)
-        else:
-            table.add_row(line)
-
-    panel = Panel(
-        table,
-        title=f"File: {file_path.name} ({header_text})",
-        title_align="left",
-        border_style="blue",
-        expand=False
-    )
-    console.print(panel)
+    layout = build_layout(file_path, styled_lines, info, no_border, wrap, line_numbers)
+    console.print(layout)
 
 def render_directory(dir_path: Path, plain: bool):
     if plain:
