@@ -6,7 +6,7 @@ from .config import load_config
 from .utils import setup_logging
 import logging
 
-app = typer.Typer(help="SmartCat: A modern replacement for cat and bat.", add_completion=False)
+app = typer.Typer(help="Affinity: A modern replacement for cat and bat.", add_completion=False)
 
 @app.command()
 def main(

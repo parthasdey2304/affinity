@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 
 def get_config_path() -> Path:
-    config_dir = Path(os.path.expanduser("~/.config/smartcat"))
+    config_dir = Path(os.path.expanduser("~/.config/affinity"))
     config_dir.mkdir(parents=True, exist_ok=True)
     return config_dir / "config.json"
 

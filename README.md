@@ -1,8 +1,8 @@
-# SmartCat
+# Affinity
 
 > A modern replacement for `cat` and `bat` that displays source code in the terminal with VS Code-like scope guides, beautiful syntax highlighting, Unicode boxes, file information, and intelligent parsing.
 
-SmartCat is designed to be the ultimate developer tool for reading code in the terminal, bringing the best parts of modern IDEs directly to your command line.
+Affinity is designed to be the ultimate developer tool for reading code in the terminal, bringing the best parts of modern IDEs directly to your command line.
 
 ## Installation
 
@@ -10,7 +10,7 @@ SmartCat is designed to be the ultimate developer tool for reading code in the t
 pip install .
 ```
 
-After installation, the `smartcat` command will be available globally.
+After installation, the `affinity` command will be available globally.
 
 ## Features
 
@@ -29,34 +29,35 @@ After installation, the `smartcat` command will be available globally.
 | **Folding Indicators** | Displays `▼` and `▶` beside collapsible code regions. |
 | **Search Highlight** | Easily find occurrences within files (`--search term`). |
 | **Highlight Current Line** | Jump right to the context you need (`--line 25`). |
-| **Diff Mode** | View beautiful side-by-side file comparisons (`smartcat old.py new.py`). |
-| **Directory Viewer** | View beautiful tree structures of directories, similar to `eza` (`smartcat src/`). |
+| **Diff Mode** | View beautiful side-by-side file comparisons (`affinity old.py new.py`). |
+| **Directory Viewer** | View beautiful tree structures of directories, similar to `eza` (`affinity src/`). |
 | **Binary Detection** | Gracefully handles binary files instead of dumping garbage to your terminal. |
 | **Nerd Font Icons** | Displays beautiful file icons (🐍, ☕, 🦀, etc.) natively in the header. |
 | **High Performance** | Blazing fast rendering even for files with 100,000+ lines. |
-| **Configuration File** | Customize your defaults permanently via `~/.config/smartcat/config.toml`. |
+| **Configuration File** | Customize your defaults permanently via `~/.config/affinity/config.toml`. |
 
 ## CLI Usage
 
 ```bash
 # Basic usage
-smartcat file.py
+affinity file.py
 
 # View an entire directory tree
-smartcat folder/
+affinity folder/
 
 # Use a specific theme
-smartcat file.py --theme dracula
+affinity file.py --theme dracula
 
 # Disable borders and formatting for plain output
-smartcat file.py --plain
+affinity file.py --plain
 
 # View a file with search highlighting
-smartcat file.py --search hello
+affinity file.py --search hello
 
 # Highlight a specific line
-smartcat file.py --line 25
+affinity file.py --line 25
 
 # Show all options
-smartcat --help
+affinity --help
 ```
+
