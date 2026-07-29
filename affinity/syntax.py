@@ -34,7 +34,13 @@ def highlight_code(
     
     for ttype, value in tokens:
         # Determine the base style for the token type
-        style = theme_mapping.get(ttype, "")
+        style = ""
+        current_ttype = ttype
+        while current_ttype is not None:
+            if current_ttype in theme_mapping:
+                style = theme_mapping[current_ttype]
+                break
+            current_ttype = current_ttype.parent
         
         parts = value.split("\n")
         for i, part in enumerate(parts):

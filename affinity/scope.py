@@ -34,23 +34,7 @@ def _add_indent_guides(lines: list[Text], raw_lines: list[str]) -> list[Text]:
         # the part that comes after the leading spaces.
         original_plain = text_line.plain
         if original_plain.startswith(' ' * indent_spaces):
-            # We must recreate the text line, skipping the first `indent_spaces` spaces.
-            # But skipping precisely in spans is complex. We will approximate by 
-            # rendering the guides and appending the original text, stripping only in plain mode.
-            # A correct approach is to iterate through original spans.
-            skipped = 0
-            for part in text_line:
-                part_plain = part.plain
-                if skipped < indent_spaces:
-                    if len(part_plain) <= indent_spaces - skipped:
-                        skipped += len(part_plain)
-                        continue
-                    else:
-                        remaining = part_plain[indent_spaces - skipped:]
-                        new_line.append(remaining, style=part.style)
-                        skipped = indent_spaces
-                else:
-                    new_line.append(part_plain, style=part.style)
+            new_line.append(text_line[indent_spaces:])
             result.append(new_line)
         else:
             result.append(text_line)

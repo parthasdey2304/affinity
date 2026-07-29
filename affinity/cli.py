@@ -14,7 +14,7 @@ def main(
     theme: str = typer.Option(None, "--theme", help="Theme to use (e.g., dracula, monokai)"),
     plain: bool = typer.Option(False, "--plain", help="Disable all formatting and borders"),
     no_border: bool = typer.Option(False, "--no-border", help="Disable borders"),
-    wrap: bool = typer.Option(False, "--wrap", help="Wrap long lines"),
+    wrap: bool = typer.Option(True, "--wrap/--no-wrap", help="Wrap long lines"),
     line_numbers: bool = typer.Option(True, "--line-numbers/--no-line-numbers", help="Show line numbers"),
     search: Optional[str] = typer.Option(None, "--search", help="Highlight search term"),
     language: Optional[str] = typer.Option(None, "--language", help="Override language detection"),
