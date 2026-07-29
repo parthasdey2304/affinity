@@ -190,9 +190,21 @@ def run(
         border_style=border_color
     ))
 
+@app.command()
+def mirage(
+    path: Path = typer.Argument(Path("."), help="Path to open in Mirage Mode")
+):
+    """Launch Affinity's full-screen Mirage Mode (interactive browser and editor)."""
+    try:
+        from .mirage.app import run
+        run(path)
+    except ImportError as e:
+        typer.secho(f"Error loading Mirage Mode: {e}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+
 def main():
     # Allow `affinity file.py` to default to `affinity view file.py`
-    subcommands = ["view", "watch", "diff", "run", "edit"]
+    subcommands = ["view", "watch", "diff", "run", "edit", "mirage"]
     if len(sys.argv) > 1 and sys.argv[1] not in subcommands and not sys.argv[1].startswith("-"):
         sys.argv.insert(1, "view")
     app()

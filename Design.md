@@ -183,3 +183,46 @@ affinity styles.css --line 4
 ╰────┴───────────────────────────────────────────────────────────────────────╯
 ```
 *(Line 4 is highlighted vividly in the terminal while surrounding lines are dimmed)*
+
+---
+
+## 8. Mirage Mode: Full-Screen Interactive IDE (`mirage`)
+
+The pinnacle of Affinity is **Mirage Mode**, a full-screen, vim-inspired interactive TUI (Terminal User Interface) built with `prompt_toolkit`. It brings an integrated file browser, code editor, and secure SSH clipboard copying directly into the terminal without leaving your environment.
+
+### Example Command
+```bash
+affinity mirage .
+```
+
+### Core Features of Mirage Mode
+
+1. **Dual-Buffer Architecture**:
+   - Maintains a strictly separate `RawBuffer` (holding pure file data) and a `DisplayBuffer` (handling UI elements and syntax highlighting). This ensures that when you copy code, you *only* get the code—never line numbers, guides, or box-drawing characters.
+
+2. **Vim-Style Modality**:
+   - **NORMAL Mode**: Navigate the code, jump around, or interact with the file tree. Read-only by default to prevent accidental typos.
+   - **INSERT Mode** (`i`): A fully featured text editor to write code. Press `Escape` to return to Normal Mode.
+   - **VISUAL Mode** (`v`): Select text precisely for copying.
+
+3. **Secure OSC 52 Clipboard & Yanking**:
+   - No more mouse-dragging across terminal panes! Press `v` to select text and `y` to yank, or `y y` to yank a single line.
+   - If you are connected via SSH (detected automatically), Affinity bypasses local limitations and uses **OSC 52 escape sequences** to securely transmit the raw copied code directly to your local computer's clipboard!
+
+4. **Interactive File Browser**:
+   - A recursive, interactive left-pane file tree. Use **Up/Down** arrows to navigate and **Enter** to instantly load a file into the editor, seamlessly bypassing read-only protections. Dotfiles and backups are cleanly filtered out.
+
+5. **Auto-Backup System**:
+   - Pressing **Ctrl+S** or **q** (Quit) automatically triggers a backup. Affinity creates a `.filename.affinity.bak` copy of your file before saving the new changes, ensuring zero risk of data loss.
+
+### Terminal Output Concept
+```text
+  📁 src/                     │  1 │ def main():
+  ├── 📁 mirage               │  2 │     print("Hello from Mirage!")
+  │   ├── 📄 app.py           │  3 │
+  │   └── 📄 buffers.py       │  4 │ if __name__ == '__main__':
+  └── 📄 main.py              │  5 │     main()
+                              │
+                              │
+  NORMAL  main.py            Ln 1, Col 1                  SAVE (Ctrl+S)  QUIT (Q)
+```

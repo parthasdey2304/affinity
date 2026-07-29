@@ -26,6 +26,18 @@ Say goodbye to plain text dumps. Affinity parses your code, wraps it in beautifu
 
 ---
 
+### Advanced Tools
+
+Affinity is more than just a viewer. It is a fully composable toolkit:
+
+- **`affinity mirage`**: Launch the full-screen interactive IDE mode! Browse files, vim-edit inline, and cleanly copy code over SSH natively using our zero-artifact dual-buffer engine.
+- **`affinity watch script.py`**: Watches the file and instantly re-renders the syntax highlighting every time you save.
+- **`affinity diff old.py new.py`**: A stunning side-by-side/unified terminal diff viewer.
+- **`affinity run script.py`**: Executes the python script inline, presenting stdout and exit codes elegantly below the syntax-highlighted source.
+- **Piping Support**: Native stdin support means `cat log.txt | affinity` automatically syntax-highlights the piped stream!
+
+---
+
 ## ✨ Spectacular Features
 
 | Feature | Description |
