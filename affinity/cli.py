@@ -30,9 +30,9 @@ def main(
         theme = config.get("theme", "monokai")
     
     if not files:
-        # Default behavior: read from stdin or show help
-        # For simplicity in this demo, just show help
-        typer.echo(typer.get_app_dir(app.info.name))
+        # Default behavior: show a helpful message
+        typer.echo("Usage: affinity [OPTIONS] [FILES]...")
+        typer.echo("Try 'affinity --help' for help.")
         raise typer.Exit()
 
     for file_path in files:
