@@ -43,14 +43,23 @@ Say goodbye to plain text dumps. Affinity parses your code, wraps it in beautifu
 
 ## 💻 Installation
 
-We provide an extremely straightforward installation suite. No system-level package conflicts, no dependency hell.
+Affinity is officially published on PyPI and can be installed globally with a single command!
 
-### Automated Setup (Recommended)
+### Python Package Index (Recommended)
 
-Simply clone this repository and run the startup script. It bypasses environment headaches and securely installs the package exclusively for your local user.
+To install Affinity across your entire system, simply run:
 
 ```bash
-# Securely install and configure Affinity
+pip install affinity-code-viewer
+```
+
+### Install from Source
+
+If you prefer to install from source without messing with system environments, clone this repository and run the startup script. It bypasses environment headaches and securely installs the package exclusively for your local user.
+
+```bash
+git clone https://github.com/your-username/affinity.git
+cd affinity
 ./start.sh
 ```
 
