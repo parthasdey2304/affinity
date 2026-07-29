@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "affinity"
+name = "affinity-code-viewer"
 version = "0.1.0"
 description = "A modern replacement for cat and bat"
 readme = "README.md"
