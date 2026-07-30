@@ -1,45 +1,80 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
-# ANSI Color Codes
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+print_affinity_banner() {
+cat <<'BANNER'
+╭────────────────────────────────────────────────────────────────────╮
+│  █████╗  ███████╗ ███████╗ ██╗ ███╗   ██╗ ██╗ ████████╗ ██╗   ██╗  │
+│ ██╔══██╗ ██╔════╝ ██╔════╝ ██║ ████╗  ██║ ██║ ╚══██╔══╝ ╚██╗ ██╔╝  │
+│ ███████║ █████╗   █████╗   ██║ ██╔██╗ ██║ ██║    ██║     ╚████╔╝   │
+│ ██╔══██║ ██╔══╝   ██╔══╝   ██║ ██║╚██╗██║ ██║    ██║      ╚██╔╝    │
+│ ██║  ██║ ██║      ██║      ██║ ██║ ╚████║ ██║    ██║       ██║     │
+│ ╚═╝  ╚═╝ ╚═╝      ╚═╝      ╚═╝ ╚═╝  ╚═══╝ ╚═╝    ╚═╝       ╚═╝     │
+╰────────────────────────────────────────────────────────────────────╯
+BANNER
 
-printf "%b\n" "${BLUE}Installing Affinity...${NC}"
-pip3 install --user . --break-system-packages
+    printf "\n"
+    printf "                    Affinity CLI\n"
+    printf "           premium terminal code viewer\n\n"
+}
 
-# Automatically add ~/.local/bin to PATH if it isn't there
+print_affinity_banner
+
+# ──────────────────────────────────────────────────────────────────────
+#  Affinity — Installation Script
+#  Installs affinity-code-viewer locally (user-level, no sudo needed)
+# ──────────────────────────────────────────────────────────────────────
+
+PYTHON="${PYTHON:-python3}"
+
+echo "▸ Checking for Python..."
+if ! command -v "$PYTHON" &>/dev/null; then
+    echo "✗ Python 3 is required but not found."
+    echo "  Install it from https://python.org and re-run this script."
+    exit 1
+fi
+
+PY_VERSION=$("$PYTHON" -c 'import sys; print(f"{sys.version_info[0]}.{sys.version_info[1]}")')
+echo "  Found Python $PY_VERSION ✓"
+
+echo ""
+echo "▸ Upgrading pip..."
+"$PYTHON" -m pip install --upgrade pip --user --quiet
+
+echo ""
+echo "▸ Installing Affinity..."
+"$PYTHON" -m pip install affinity-code-viewer --user --quiet
+
+# Ensure ~/.local/bin is in PATH
 LOCAL_BIN="$HOME/.local/bin"
 case ":$PATH:" in
-    *":$LOCAL_BIN:"*) ;;
+    *":$LOCAL_BIN:")
+        ;;
     *)
-        printf "%b\n" "${YELLOW}Adding $LOCAL_BIN to your PATH...${NC}"
-        
-        # Add to bashrc
-        if [ -f "$HOME/.bashrc" ]; then
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
-        fi
-        
-        # Add to zshrc if it exists
-        if [ -f "$HOME/.zshrc" ]; then
-            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.zshrc"
-        fi
-        
-        # Export it for the current script execution just in case
-        export PATH="$LOCAL_BIN:$PATH"
+        echo ""
+        echo "⚠  $LOCAL_BIN is not in your PATH."
+        echo "  Add this line to your ~/.bashrc or ~/.zshrc:"
+        echo ""
+        echo '    export PATH="$HOME/.local/bin:$PATH"'
+        echo ""
+        echo "  Then run: source ~/.bashrc  (or restart your terminal)"
         ;;
 esac
 
-printf "%b\n" "${GREEN}------------------------------------------------${NC}"
-printf "%b\n" "${GREEN}✓ Affinity is successfully installed and ready!${NC}"
-printf "%b\n" "${GREEN}------------------------------------------------${NC}"
-printf "%b\n" ""
-printf "%b\n" "${BLUE}How to use Affinity for opening code:${NC}"
-printf "%b\n" "  ${YELLOW}affinity file.py${NC}              - Open a file with beautiful syntax highlighting and VS Code scope guides"
-printf "%b\n" "  ${YELLOW}affinity folder/${NC}              - View a rich directory tree"
-printf "%b\n" "  ${YELLOW}affinity file.py --theme dracula${NC} - Open code using the Dracula theme"
-printf "%b\n" "  ${YELLOW}affinity file.py --search text${NC}   - Highlight occurrences of 'text' in the code"
-printf "%b\n" "  ${YELLOW}affinity --help${NC}               - View all available commands and features"
-printf "%b\n" ""
-printf "%b\n" "Note: If the 'affinity' command is not found, run ${YELLOW}source ~/.bashrc${NC} or restart your terminal."
+echo ""
+echo "▸ Verifying installation..."
+if command -v affinity &>/dev/null; then
+    echo "  $(affinity --version 2>/dev/null || echo 'affinity command found ✓')"
+else
+    echo "  Installation complete. If 'affinity' is not found,"
+    echo "  make sure $LOCAL_BIN is in your PATH (see above)."
+fi
+
+echo ""
+echo "▸ Done! Try it out:"
+echo "    affinity main.py"
+echo "    affinity --help"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Built with ❤ for developers everywhere."
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
